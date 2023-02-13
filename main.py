@@ -8,18 +8,21 @@ class Students:
         self.attention = attention
         self.compatibility = compatibility
         self.busy = False
-        self.desk = 7
+        self.desk = 5
 
         if self.vision == '1-2 парты':
-            self.desk = 2
+            self.desk = 0
         elif self.vision == '1-3 парты':
+            self.desk = 1
+
+        if self.attention == "TRUE":
+            self.desk -= 1
+
+        if self.height == 'Низкий':
             self.desk = 3
-        elif self.attention == "TRUE":
-            self.desk = 4
-        elif self.height == 'Низкий':
-            self.desk = 5
         elif self.height == "Средний":
-            self.desk = 6
+            self.desk -= 2
+
 
 
 def createInfo(file):
@@ -98,8 +101,19 @@ def seatingArran():
                         elif out[k].hand == 'Правая':
                             cabinet[i][j] = out[k]
                             out[k].busy = True
-
-
+    for i in range(len(cabinet)):
+        for j in range(len(cabinet[i])):
+            for k in range(len(out)):
+                if cabinet[i][j] == 1:
+                    if out[k].busy:
+                        continue
+                    else:
+                        if out[k].hand == 'Левая':
+                            cabinet[i][0] = out[k]
+                            out[k].busy = True
+                        elif out[k].hand == 'Правая':
+                            cabinet[i][j] = out[k]
+                            out[k].busy = True
     return cabinet
 
 def createCVS():
